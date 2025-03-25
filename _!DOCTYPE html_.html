@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablas de Multiplicar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ff4500;
+        }
+
+        .question {
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+
+        .input {
+            font-size: 1.2rem;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .button {
+            font-size: 1rem;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .feedback {
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+
+        .character {
+            margin-top: 20px;
+        }
+
+        .character img {
+            max-width: 150px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>¡Practica las Tablas de Multiplicar! 🐻🐶🐱</h1>
+    <div class="question">
+        ¿Cuánto es <span id="multiplication"></span>?
+    </div>
+
+    <input type="number" id="answer" class="input" placeholder="Escribe tu respuesta aquí">
+    <br>
+    <button class="button" onclick="checkAnswer()">Comprobar Respuesta</button>
+    <div id="feedback" class="feedback"></div>
+
+    <div class="character">
+        <img id="character" src="" alt="">
+    </div>
+
+    <script>
+        // Lista de personajes
+        const characters = [
+            { name: "Oso", image: "https://via.placeholder.com/150?text=Oso" },
+            { name: "Perro", image: "https://via.placeholder.com/150?text=Perro" },
+            { name: "Gato", image: "https://via.placeholder.com/150?text=Gato" },
+            { name: "Conejo", image: "https://via.placeholder.com/150?text=Conejo" },
+        ];
+
+        let currentMultiplication = { a: 0, b: 0, result: 0 };
+
+        // Generar una nueva pregunta
+        function generateQuestion() {
+            const a = Math.floor(Math.random() * 10) + 1;
+            const b = Math.floor(Math.random() * 10) + 1;
+            currentMultiplication = { a, b, result: a * b };
+            document.getElementById("multiplication").textContent = `${a} x ${b}`;
+            document.getElementById("answer").value = "";
+            document.getElementById("feedback").textContent = "";
+            setCharacter();
+        }
+
+        // Comprobar la respuesta del usuario
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById("answer").value);
+            const feedback = document.getElementById("feedback");
+            if (userAnswer === currentMultiplication.result) {
+                feedback.textContent = "¡Correcto! 🎉 Muy bien hecho.";
+                feedback.style.color = "green";
+            } else {
+                feedback.textContent = `Incorrecto. La respuesta correcta es ${currentMultiplication.result}.`;
+                feedback.style.color = "red";
+            }
+            setTimeout(generateQuestion, 2000); // Nueva pregunta tras 2 segundos
+        }
+
+        // Cambiar el personaje de la imagen
+        function setCharacter() {
+            const randomCharacter = characters[Math.floor(Math.random() * characters.length)];
+            document.getElementById("character").src = randomCharacter.image;
+            document.getElementById("character").alt = randomCharacter.name;
+        }
+
+        // Iniciar con la primera pregunta
+        generateQuestion();
+    </script>
+</body>
+</html>
